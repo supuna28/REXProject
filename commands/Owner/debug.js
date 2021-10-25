@@ -1,7 +1,7 @@
 module.exports = {
     name: "debug",
     owner: true,
-    async run(conn, m, args) {
+    async run(m, { conn, args, text}) {
         console.log(m)
     }
 }
