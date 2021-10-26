@@ -1,5 +1,6 @@
 module.exports = {
     name: "demote",
+    group: true,
     admin: true,
     botAdmin: true,
     async run(m, { conn, participants }) {

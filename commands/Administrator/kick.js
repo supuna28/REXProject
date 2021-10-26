@@ -2,6 +2,7 @@ const { MessageType } = require("@adiwajshing/baileys")
 
 module.exports = {
     name: "kick", // name of the command
+    group: true,
     admin: true, // if you're using on group
     botAdmin: true, // if you're using on group, same at up there
     owner: false, // owner only

@@ -1,5 +1,6 @@
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
+const { MessageType } = require('@adiwajshing/baileys')
 module.exports = {
     name: "sticker", 
     group: false,
@@ -9,8 +10,9 @@ module.exports = {
     async run(m, { conn, args, text }) {
         // fill your code here
         if (!m.quoted) throw global.msgFail.notQuoted
-        let q = m.quoted ? m.quoted : m
+        let q = { message: { [m.quoted.mtype]: m.quoted }}
         let media = await conn.downloadAndSaveM(q, './tmp/img')
+        conn.reply(m.chat, global.msgBot.stickerWait, m)
         await ffmpeg(media)
         .input(media)
         .on('error', function (err) {

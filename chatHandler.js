@@ -30,16 +30,20 @@ module.exports = {
                         let args = text.trim().split(/ +/).slice(1)
                         let isAccept = typeof commands.name === 'string' ? commands.name === commandName : false
                         if (!isAccept) continue
+                        if (commands.group && !m.isGroup) {
+                            conn.reply(m.chat, global.msgFail.notGroup, m)
+                            continue;
+                        }
                         if (commands.owner && !isROwner) {
-                            conn.sendMessage(m.chat, global.msgFail.owner, MessageType.text, { quoted: m })
-                            continue
+                            conn.reply(m.chat, global.msgFail.owner, m)
+                            continue;
                         }
                         if (commands.admin && !isAdmin) {
-                            conn.sendMessage(m.chat, global.msgFail.notAdmin, MessageType.text, { quoted: m });
+                            conn.reply(m.chat, global.msgFail.notAdmin, m);
                             continue;
                         }
                         if (commands.botAdmin && !isBotAdmin) {
-                            conn.sendMessage(m.chat, global.msgFail.notBotAdmin, MessageType.text, { quoted: m });
+                            conn.reply(m.chat, global.msgFail.notBotAdmin, m);
                             continue;
                         }
                         m.isCommand = true
@@ -81,15 +85,17 @@ module.exports = {
 }
 
 global.msgFail = {
-    owner: "[ ❗ ] This command can only used by the owner!",
-    notAdmin: "[ ❗ ] This command can only used by the administrator group!",
-    notBotAdmin: "[ ❗ ] Please promote this bot as administrator group for using this command!",
-    notMentioned: "[ ❗ ] Tag the user that you wanna kick",
-    notQuoted: "[ ❗ ] Please reply or quote a media message!"
+    owner: "[ ❗ ] *_This command can only used by the owner!_*",
+    notGroup: "[ ❗ ] *_This command can only used on a group!_*",
+    notAdmin: "[ ❗ ] *_This command can only used by the administrator group!_*",
+    notBotAdmin: "[ ❗ ] *_Please promote this bot as administrator group for using this command!_*",
+    notMentioned: "[ ❗ ] *_Tag the user that you wanna kick_*",
+    notQuoted: "[ ❗ ] *_Please reply or quote a media message!_*"
 }
 
 global.msgBot = {
     wait: "[ ⌛ ] *_Loading, please wait..._*",
-    afterAdmin: "[ ❗ ] INFO : Please don't use admin command too frequently, because can lead bot number to be banned.",
-    support: `[ 💬 ] Thank you for using this bot, considering you can donate us on *${global.prefix}donate*`
+    stickerWait: "[ ⌛ ] *_Processing the sticker, please wait..._*",
+    afterAdmin: "[ ❗ ] *_INFO : Please don't use admin command too frequently, because can lead bot number to be banned._*",
+    support: `[ 💬 ] *_Thank you for using this bot, considering you can donate us on ${global.prefix}donate_*`
 }
