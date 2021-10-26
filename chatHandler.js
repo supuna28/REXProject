@@ -22,7 +22,9 @@ module.exports = {
                     if (typeof m.text !== 'string') return
                     let usedPrefix
                     let _prefix = commands.customPrefix ? commands.customPrefix : conn.prefix ? conn.prefix : global.prefix
-                    if ((usedPrefix = _prefix)) {
+                    const str2Regex = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+                    let match = (typeof _prefix === 'string' ? [[new RegExp(str2Regex(_prefix)).exec(m.text), new RegExp(str2Regex(_prefix))]] : [[[], new RegExp]]).find(p => p[1])
+                    if ((usedPrefix = (match[0] || '')[0])) {
                         let text = m.text.startsWith(global.prefix) ? m.text : ''
                         let commandName = text.slice(global.prefix.length).trim().split(/ +/).shift().toLowerCase()
                         let args = text.trim().split(/ +/).slice(1)
@@ -82,7 +84,8 @@ global.msgFail = {
     owner: "[ ❗ ] This command can only used by the owner!",
     notAdmin: "[ ❗ ] This command can only used by the administrator group!",
     notBotAdmin: "[ ❗ ] Please promote this bot as administrator group for using this command!",
-    notMentioned: "[ ❗ ] Tag the user that you wanna kick"
+    notMentioned: "[ ❗ ] Tag the user that you wanna kick",
+    notQuoted: "[ ❗ ] Please reply or quote a media message!"
 }
 
 global.msgBot = {
