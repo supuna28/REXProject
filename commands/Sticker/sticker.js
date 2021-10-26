@@ -9,10 +9,10 @@ module.exports = {
     owner: false, 
     async run(m, { conn, args, text }) {
         // fill your code here
-        if (!m.quoted) throw global.msgFail.notQuoted
+        if (!m.quoted) throw global.msgFail[global.language].notQuoted
         let q = { message: { [m.quoted.mtype]: m.quoted }}
         let media = await conn.downloadAndSaveM(q, './tmp/img')
-        conn.reply(m.chat, global.msgBot.stickerWait, m)
+        conn.reply(m.chat, global.msgBot[global.language].stickerWait, m)
         await ffmpeg(media)
         .input(media)
         .on('error', function (err) {

@@ -30,6 +30,7 @@
     "glob": "^7.2.0",
     "got": "^11.8.2",
     "node-fetch": "2.6.1",
+    "node-webpmux": "2.0.0",
     "path": "^0.12.7",
     "request": "^2.88.2",
     "spinnies": "^0.5.1",
