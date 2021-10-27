@@ -1,6 +1,8 @@
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const { MessageType } = require('@adiwajshing/baileys')
+const addExif = require('../../lib/exif')
+const package = require('../../package.json')
 module.exports = {
     name: "sticker", 
     group: false,
@@ -9,9 +11,11 @@ module.exports = {
     owner: false, 
     async run(m, { conn, args, text }) {
         // fill your code here
-        if (!m.quoted) throw global.msgFail[global.language].notQuoted
-        let q = { message: { [m.quoted.mtype]: m.quoted }}
-        let media = await conn.downloadAndSaveM(q, './tmp/img')
+        let stiker = false
+        let isMedia = (m.type === 'imageMessage' || m.type === 'videoMessage' || m.quoted)
+        if (!isMedia) throw global.msgFail[global.language].notQuoted
+        let q = m.quoted ? m.quoted : m
+        let media = await q.download('./tmp/img')
         conn.reply(m.chat, global.msgBot[global.language].stickerWait, m)
         await ffmpeg(media)
         .input(media)
@@ -20,7 +24,8 @@ module.exports = {
             return err
         })
         .on('end', async function() {
-            conn.sendMessage(m.chat, fs.readFileSync('./tmp/img.webp'), MessageType.sticker)
+            stiker = await addExif(fs.readFileSync('./tmp/img.webp'), 'Ini weem bang', `${package.author}@${package.name}`)
+            conn.sendMessage(m.chat, stiker, MessageType.sticker)
             fs.unlinkSync('./tmp/img.webp')
             fs.unlinkSync(media)
         })
