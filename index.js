@@ -11,7 +11,7 @@ const { startspin, success, info } = require('./lib/spinner')
 
 // Slogan when initializing the bot
 CFonts.say('REXProject', {
-    fonts: 'block',
+    font: 'block',
     align: "center",
     colors: ["cyanBright", "blue"]
 })
@@ -38,7 +38,7 @@ async function InitializeWA() {
     conn.on('open', () => {
         fs.writeFileSync(authinfo, JSON.stringify(conn.base64EncodedAuthInfo()), null, '\t')
         success("2", "Your bot is ready!")
-        //startspin("2", "Waiting for new messages")
+        startspin("2", "Waiting for new messages")
     })
     conn.on('close', DisconnectReason => {
         console.log(`[ ! ] Disconnected, reason ${DisconnectReason.reason}, reconnecting...`)
