@@ -12,7 +12,10 @@ global.msgFail = { // you can add another message with your own language
         notBotAdmin: "[ ❗ ] *_Please promote this bot as administrator group for using this command!_*",
         notMentioned: "[ ❗ ] *_Tag the user_*",
         notQuoted: "[ ❗ ] *_Please reply or quote a media message!_*",
-        failed: "[ ❗ ] *_Unexpected error when processing your request, please try again_*"
+        failed: "[ ❗ ] *_Unexpected error when processing your request, please try again_*",
+        usernameNotIncluded: "[ ❗ ] *_Please input a username!_*",
+        urlNotIncluded: "[ ❗ ] *_Please input a url!_*",
+        idNotIncluded: "[ ❗ ] *_Please input a id!_*"
     },
     id: {
         owner: "[ ❗ ] *_Perintah ini hanya bisa digunakan oleh pemilik bot!_*",
@@ -21,7 +24,10 @@ global.msgFail = { // you can add another message with your own language
         notBotAdmin: "[ ❗ ] *_Mohon promosikan bot ini menjadi admin grup untuk menggunakan perintah ini!_*",
         notMentioned: "[ ❗ ] *_Tag membernya_*",
         notQuoted: "[ ❗ ] *_Reply sebuah pesan berisi foto atau video!_*",
-        failed: "[ ❗ ] *_Terjadi error ketika memproses permintaan anda, silahkan coba lagi_*"
+        failed: "[ ❗ ] *_Terjadi error ketika memproses permintaan anda, silahkan coba lagi_*",
+        usernameNotIncluded: "[ ❗ ] *_Mohon masukkan username!_*",
+        urlNotIncluded: "[ ❗ ] *_Mohon masukkan url!_*",
+        idNotIncluded: "[ ❗ ] *_Mohon masukkan id!_*"
     }
 }
 

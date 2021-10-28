@@ -26,10 +26,11 @@ module.exports = {
                     const str2Regex = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
                     let match = (typeof _prefix === 'string' ? [[new RegExp(str2Regex(_prefix)).exec(m.text), new RegExp(str2Regex(_prefix))]] : [[[], new RegExp]]).find(p => p[1])
                     if ((usedPrefix = (match[0] || '')[0])) {
-                        let text = m.text.startsWith(global.prefix) ? m.text : ''
-                        let commandName = text.slice(global.prefix.length).trim().split(/ +/).shift().toLowerCase()
-                        let args = text.trim().split(/ +/).slice(1)
-                        let isAccept = typeof commands.name === 'string' ? commands.name === commandName : false
+                        let cmd = m.text.startsWith(global.prefix) ? m.text : ''
+                        let commandName = cmd.slice(global.prefix.length).trim().split(/ +/).shift().toLowerCase()
+                        let args = cmd.trim().split(/ +/).slice(1)
+                        let text = args.join` `
+                        let isAccept = typeof commands.name === 'string' ? commands.name === commandName : Array.isArray(commands.name) ? commands.name.some(cmd => cmd === commandName) : false
                         if (!isAccept) continue
                         if (commands.group && !m.isGroup) {
                             conn.reply(m.chat, global.msgFail[global.language].notGroup, m)
