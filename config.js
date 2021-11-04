@@ -4,6 +4,8 @@ global.language = 'id'; // choose an language, just available english and indone
 
 global.footerText = `Made with hand by ${package.author}`
 
+global.poweredWatermark = `--- Powered by ${package.author}@${package.name} ---`
+
 global.msgFail = { // you can add another message with your own language
     en: {
         owner: "[ ❗ ] *_This command can only used by the owner!_*",
@@ -15,7 +17,8 @@ global.msgFail = { // you can add another message with your own language
         failed: "[ ❗ ] *_Unexpected error when processing your request, please try again_*",
         usernameNotIncluded: "[ ❗ ] *_Please input a username!_*",
         urlNotIncluded: "[ ❗ ] *_Please input a url!_*",
-        idNotIncluded: "[ ❗ ] *_Please input a id!_*"
+        idNotIncluded: "[ ❗ ] *_Please input a id!_*",
+        textNotIncluded: "[ ❗ ] *_Please input a text!_*",
     },
     id: {
         owner: "[ ❗ ] *_Perintah ini hanya bisa digunakan oleh pemilik bot!_*",
@@ -27,7 +30,8 @@ global.msgFail = { // you can add another message with your own language
         failed: "[ ❗ ] *_Terjadi error ketika memproses permintaan anda, silahkan coba lagi_*",
         usernameNotIncluded: "[ ❗ ] *_Mohon masukkan username!_*",
         urlNotIncluded: "[ ❗ ] *_Mohon masukkan url!_*",
-        idNotIncluded: "[ ❗ ] *_Mohon masukkan id!_*"
+        idNotIncluded: "[ ❗ ] *_Mohon masukkan id!_*",
+        textNotIncluded: "[ ❗ ] *_Mohon masukkan teks!_*",
     }
 }
 
