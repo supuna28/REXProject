@@ -1,12 +1,15 @@
 const fs = require('fs')
+const i18n = require('i18n')
 module.exports = {
     name: ['changeppgc'],
+    tags: "admin",
+    description: i18n.__('group.cppgc.description'),
     group: true,
     admin: true,
     botAdmin: true,
     async run(m, { conn, text }) {
         let isImage = (m.type === 'imageMessage' || m.quoted)
-        if (!isImage) throw global.msgFail[global.language].notQuoted
+        if (!isImage) throw i18n.__('group.notquotedpp')
         let quoted = m.quoted ? m.quoted : m
         let media = await quoted.download('./tmp/img')
         try {

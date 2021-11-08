@@ -1,0 +1,83 @@
+{
+	"failed": {
+		"owner": "[ ❗ ] *_Perintah ini hanya bisa digunakan oleh pemilik bot!_*",
+		"notGroup": "[ ❗ ] *_Perintah ini hanya bisa digunakan di grup!_*",
+		"notAdmin": "[ ❗ ] *_Perintah ini hanya bisa digunakan oleh admin grup!_*",
+		"notBotAdmin": "[ ❗ ] *_Mohon promosikan bot ini menjadi admin grup untuk menggunakan perintah ini!_*",
+		"notMentioned": "[ ❗ ] *_Tag membernya._*",
+		"notQuoted": "[ ❗ ] *_Reply sebuah pesan berisi foto atau video!_*",
+		"error": "[ ❗ ] *_Terjadi error ketika memproses permintaan anda, silahkan coba lagi._*",
+		"usernameNotIncluded": "[ ❗ ] *_Mohon masukkan username!_*",
+		"urlNotIncluded": "[ ❗ ] *_Mohon masukkan url!_*",
+		"idNotIncluded": "[ ❗ ] *_Mohon masukkan id!_*",
+		"textNotIncluded": "[ ❗ ] *_Mohon masukkan teks!_*"
+	},
+	"sticker": {
+		"description": "Konversi foto atau video menjadi sticker.",
+		"process": "[ ⌛ ] *_Memproses sticker, tunggu._*"
+	},
+	"toimg": {
+		"description": "Konversi sticker menjadi media (foto atau video).",
+		"process": "[ ⌛ ] *_Mengonversi media, tunggu._*",
+		"done": "Berhasil mengonversi media."
+	},
+	"group": {
+		"kick": {
+			"description": "Keluarkan member dari grup."
+		},
+		"cngc": {
+			"description": "Ganti subjek atau judul group."
+		},
+		"cppgc": {
+			"description": "Ganti foto profil group."
+		},
+		"promote": {
+			"description": "Jadikan member group menjadi admin group."
+		},
+		"demote": {
+			"description": "Jadikan pengguna admin menjadi member group."
+		},
+		"revokelink": {
+			"description": "Setel ulang link group."
+		},
+		"changedesc": {
+			"description": "Ganti deskripsi group."
+		},
+		"changesettings": {
+			"description": "Ubah pengaturan group, contoh:\n{prefix}group open atau {prefix}group close"
+		},
+		"linkgc": {
+			"description": "Bagikan link group."
+		},
+		"notquotedpp": "[ ❗ ] *_Reply sebuah pesan berisi foto untuk mengubah foto profile group!_*",
+		"afterAdmin": "[ ❗ ] *_INFO : Jangan spam perintah admin, karena bisa menyebabkan nomor bot terblokir._*"
+	},
+	"downloader": {
+		"ig": {
+			"description": "Download instagram media (foto atau video)"
+		}
+	},
+	"gi": {
+		"stalk": {
+			"description": "Stalk pengguna genshin impact dengan uid. (Tidak bekerja jika diprivate)"
+		}
+	},
+	"info": {
+		"getpp": {
+			"description": "Dapatkan foto profile pengguna atau group.",
+			"done": "Berhasil mendapatkan gambar."
+		},
+		"isonwa": {
+			"description": "Cek apakah nomor hp ini ada di whatsapp."
+		}
+	},
+	"support": "[ 💬 ] *_Terima kasih telah menggunakan bot ini, anda dapat donasi kami di perintah '{global.prefix}donate'_*",
+	"process": "[ ⌛ ] *_Memproses, tunggu._*",
+	"!desc": "Deskripsi belum diisi",
+	"menu": {
+		"description": "Mengirim daftar perintah lagi:/",
+		"user": "Halo, {pushname}!\nBerikut ini adalah daftar perintah yang bisa anda gunakan di bot ini!"
+	},
+	"maintenance": "Perintah ini sedang maintenance, silahkan tunggu pembaruan selanjutnya.",
+	"": ""
+}

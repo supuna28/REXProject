@@ -8,6 +8,8 @@ const CFonts = require('cfonts')
 const glob = require('glob')
 const chatHandler = require('./chatHandler')
 const { startspin, success, info } = require('./lib/spinner')
+const { greenBright } = require('chalk')
+require('./lib/i18n')
 
 // Slogan when initializing the bot
 CFonts.say('REXProject', {
@@ -38,7 +40,7 @@ async function InitializeWA() {
     conn.on('open', () => {
         fs.writeFileSync(authinfo, JSON.stringify(conn.base64EncodedAuthInfo()), null, '\t')
         success("2", "Your bot is ready!")
-        startspin("2", "Waiting for new messages")
+        // startspin("2", "Waiting for new messages")
     })
     conn.on('close', DisconnectReason => {
         console.log(`[ ! ] Disconnected, reason ${DisconnectReason.reason}, reconnecting...`)
@@ -56,7 +58,7 @@ async function start() {
         delete require.cache[commands]
         global.commands[commands] = require(commands)
     }
-    console.log(Object.keys(global.commands))
+    console.log(greenBright(`Loaded ${Object.keys(global.commands).length} commands.`))
     InitializeWA();
 }
 

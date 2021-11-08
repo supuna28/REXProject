@@ -1,12 +1,14 @@
 const { GroupSettingChange } = require("@adiwajshing/baileys");
-
+const i18n = require('i18n')
 module.exports = {
     name: ['group', 'setgc'],
+    tags: "admin",
+    description: i18n.__mf('group.changesettings.description', { prefix: global.prefix }),
     group: true,
     admin: true,
     botAdmin: true,
     async run(m, { conn, text }) {
-        if (!text) throw global.msgFail[global.language].textNotIncluded
+        if (!text) throw i18n.__('failed.textNotIncluded')
         switch (text) {
             case 'open': 
                 await conn.groupSettingChange(m.chat, GroupSettingChange.messageSend, false)

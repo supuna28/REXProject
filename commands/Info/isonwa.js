@@ -1,5 +1,8 @@
+const i18n = require('i18n')
 module.exports = {
     name: 'isonwa',
+    tags: "info",
+    description: i18n.__('info.isonwa.description'),
     async run(m, { conn, text }) {
         if (isNaN(text)) throw 'Please fill a number not a string!'
         let result = await conn.isOnWhatsApp(text)

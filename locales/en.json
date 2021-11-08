@@ -1,0 +1,83 @@
+{
+	"failed": {
+		"owner": "[ ❗ ] *_This command can used by owner only!_*",
+		"notGroup": "[ ❗ ] *_This command can used only on group!_*",
+		"notAdmin": "[ ❗ ] *_This command can used by administrator group only!_*",
+		"notBotAdmin": "[ ❗ ] *_Please promote bot for using this command!_*",
+		"notMentioned": "[ ❗ ] *_Tag the member._*",
+		"notQuoted": "[ ❗ ] *_Reply a message with picture or video!_*",
+		"error": "[ ❗ ] *_Unexpected error when processing your request, try again._*",
+		"usernameNotIncluded": "[ ❗ ] *_Please input username!_*",
+		"urlNotIncluded": "[ ❗ ] *_Please input url!_*",
+		"idNotIncluded": "[ ❗ ] *_Please input id!_*",
+		"textNotIncluded": "[ ❗ ] *_Please input text!_*"
+	},
+	"sticker": {
+		"description": "Convert picture or video into sticker.",
+		"process": "[ ⌛ ] *_Processing the sticker, wait._*"
+	},
+	"toimg": {
+		"description": "Convert sticker into a media (picture or video).",
+		"process": "[ ⌛ ] *_Converting media, wait._*",
+		"done": "Converting is done."
+	},
+	"group": {
+		"kick": {
+			"description": "Kick a member out of this group."
+		},
+		"cngc": {
+			"description": "Change subject or title group."
+		},
+		"cppgc": {
+			"description": "Change picture profile group."
+		},
+		"promote": {
+			"description": "Make a member group into a admin group."
+		},
+		"demote": {
+			"description": "Make admin user into a member group."
+		},
+		"revokelink": {
+			"description": "Reset link group."
+		},
+		"changedesc": {
+			"description": "Change deskripsi group."
+		},
+		"changesettings": {
+			"description": "Change group settings, example:\n{prefix}group open or {prefix}group close"
+		},
+		"linkgc": {
+			"description": "Share a link group."
+		},
+		"notquotedpp": "[ ❗ ] *_Reply a message included picture for changing the group photo profile!_*",
+		"afterAdmin": "[ ❗ ] *_INFO : Don't spam admin commands, because can be lead bot number to be banned._*"
+	},
+	"downloader": {
+		"ig": {
+			"description": "Download instagram media (picture or video)"
+		}
+	},
+	"gi": {
+		"stalk": {
+			"description": "Stalk genshin impact user with uid. (Not working if privated)"
+		}
+	},
+	"info": {
+		"getpp": {
+			"description": "Get a photo profile user or group.",
+			"done": "Success getting the photo profile."
+		},
+		"isonwa": {
+			"description": "Check if a number on whatsapp."
+		}
+	},
+	"support": "[ 💬 ] *_Thank you for using this bot, considering you can donate us on command '{global.prefix}donate'_*",
+	"process": "[ ⌛ ] *_Processing, wait._*",
+	"!desc": "Description not filled.",
+	"menu": {
+		"description": "Send a command list again:/",
+		"user": "Hello, {pushname}!\nThe following is a list of commands that you can use in this bot!"
+	},
+	"maintenance": "This command is under maintenance, please wait for the next update.",
+	"": ""
+}

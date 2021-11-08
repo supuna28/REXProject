@@ -3,14 +3,16 @@ const simpleChatUpdate = require('./lib/simpleChatUpdate')
 const { MessageType } = require('@adiwajshing/baileys')
 const util = require('util')
 const chalk = require('chalk')
+const i18n = require('i18n')
 module.exports = {
     async handler(chatUpdate) {
         if (!chatUpdate.hasNewMessage) return
         if (!chatUpdate.messages && !chatUpdate.count) return
         let m = chatUpdate.messages.all()[0]
         try {
-            simpleChatUpdate.chatUpdate(conn, m)
+            simpleChatUpdate.chatUpdate(this, m)
             try {
+                if (m.isBaileys) return
                 let isROwner = conn.user.jid.includes(m.sender)
                 let groupMetadata = m.isGroup ? conn.chats.get(m.chat).metadata || await conn.groupMetadata(m.chat) : {} || {}
                 let participants = m.isGroup ? groupMetadata.participants : [] || []
@@ -33,20 +35,24 @@ module.exports = {
                         let isAccept = typeof commands.name === 'string' ? commands.name === commandName : Array.isArray(commands.name) ? commands.name.some(cmd => cmd === commandName) : false
                         if (!isAccept) continue
                         if (commands.group && !m.isGroup) {
-                            conn.reply(m.chat, global.msgFail[global.language].notGroup, m)
+                            conn.reply(m.chat, i18n.__("failed.notGroup"), m)
                             continue;
                         }
                         if (commands.owner && !isROwner) {
-                            conn.reply(m.chat, global.msgFail[global.language].owner, m)
+                            conn.reply(m.chat, i18n.__("failed.owner"), m)
                             continue;
                         }
                         if (commands.admin && !isAdmin) {
-                            conn.reply(m.chat, global.msgFail[global.language].notAdmin, m);
+                            conn.reply(m.chat, i18n.__("failed.notAdmin"), m);
                             continue;
                         }
                         if (commands.botAdmin && !isBotAdmin) {
-                            conn.reply(m.chat, global.msgFail[global.language].notBotAdmin, m);
+                            conn.reply(m.chat, i18n.__("failed.notBotAdmin"), m);
                             continue;
+                        }
+                        if (commands.maintenance && !isOwner) {
+                            conn.reply(m.chat, i18n.__('maintenance'), m)
+                            continue
                         }
                         m.isCommand = true
                         m.command = commandName
