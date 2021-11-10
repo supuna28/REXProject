@@ -9,6 +9,7 @@ const glob = require('glob')
 const chatHandler = require('./chatHandler')
 const { startspin, success, info } = require('./lib/spinner')
 const { greenBright } = require('chalk')
+const yargs = require('yargs/yargs')
 require('./lib/i18n')
 
 // Slogan when initializing the bot
@@ -24,6 +25,19 @@ CFonts.say('REXProject by rthelolchex', {
     colors: ['cyanBright']
 })
 
+// Thanks to Nurutomo for database JSON
+global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+global.DATABASE = new (require('./lib/database'))(`${opts._[0] ? opts._[0] + '_' : ''}database.json`, null, 2)
+if (!global.DATABASE.data.users) global.DATABASE.data = {
+    users: {},
+    groups: {},
+    chats: {},
+    stats: {},
+  }
+  if (!global.DATABASE.data.groups) global.DATABASE.data.groups = {}
+  if (!global.DATABASE.data.chats) global.DATABASE.data.chats = {}
+  if (!global.DATABASE.data.stats) global.DATABASE.data.stats = {}
+
 async function InitializeWA() {
     global.conn = new WAConnection()
     let authinfo = './session.data.json'
@@ -38,7 +52,6 @@ async function InitializeWA() {
         info('2', "Authenticate to continue")
     })
     conn.on('open', () => {
-        fs.writeFileSync(authinfo, JSON.stringify(conn.base64EncodedAuthInfo()), null, '\t')
         success("2", "Your bot is ready!")
         // startspin("2", "Waiting for new messages")
     })
@@ -48,7 +61,20 @@ async function InitializeWA() {
     })
     conn.handler = chatHandler.handler
     conn.on('chat-update', conn.handler)
-    await conn.connect()
+    conn.connect().then(async () => {
+        if (!global.DATABASE.data) await loadDB()
+        fs.writeFileSync(authinfo, JSON.stringify(conn.base64EncodedAuthInfo()), null, '\t')
+    })
+    async function loadDB() {
+        global.DATABASE.data = {
+            users: {},
+            chats: {},
+            stats: {},
+            msgs: {},
+            sticker: {},
+        }
+        await global.DATABASE.save()
+    }
 }
 
 async function start() {
@@ -60,6 +86,11 @@ async function start() {
     }
     console.log(greenBright(`Loaded ${Object.keys(global.commands).length} commands.`))
     InitializeWA();
+    setInterval(async () => {
+        await global.DATABASE.save()
+    }, 60 * 1000)
 }
+
+process.on('exit', () => global.DATABASE.save())
 
 start()
