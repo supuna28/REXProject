@@ -12,21 +12,6 @@ module.exports = {
         let m = chatUpdate.messages.all()[0]
         try {
             simpleChatUpdate.chatUpdate(this, m)
-            // Thanks to Nurutomo for database JSON
-            try {
-                let user
-                if (user = global.DATABASE._data.users[m.sender]) {
-                    if (!isNumber(user.exp)) user.exp = 0
-                    if (!isNumber(user.limit)) user.limit = 10
-                    if (!'name' in user) user.name = conn.getName(m.sender)
-                } else global.DATABASE._data.users[m.sender] = {
-                    exp: 0,
-                    limit: 10,
-                    name: conn.getName(m.sender)
-                }
-            } catch (e) {
-                console.log(e, global.DATABASE.data)
-            }
             try {
                 if (m.isBaileys) return
                 let isROwner = conn.user.jid.includes(m.sender)

@@ -27,16 +27,6 @@ CFonts.say('REXProject by rthelolchex', {
 
 // Thanks to Nurutomo for database JSON
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-global.DATABASE = new (require('./lib/database'))(`${opts._[0] ? opts._[0] + '_' : ''}database.json`, null, 2)
-if (!global.DATABASE.data.users) global.DATABASE.data = {
-    users: {},
-    groups: {},
-    chats: {},
-    stats: {},
-  }
-  if (!global.DATABASE.data.groups) global.DATABASE.data.groups = {}
-  if (!global.DATABASE.data.chats) global.DATABASE.data.chats = {}
-  if (!global.DATABASE.data.stats) global.DATABASE.data.stats = {}
 
 async function InitializeWA() {
     global.conn = new WAConnection()
@@ -62,35 +52,25 @@ async function InitializeWA() {
     conn.handler = chatHandler.handler
     conn.on('chat-update', conn.handler)
     conn.connect().then(async () => {
-        if (!global.DATABASE.data) await loadDB()
         fs.writeFileSync(authinfo, JSON.stringify(conn.base64EncodedAuthInfo()), null, '\t')
     })
-    async function loadDB() {
-        global.DATABASE.data = {
-            users: {},
-            chats: {},
-            stats: {},
-            msgs: {},
-            sticker: {},
-        }
-        await global.DATABASE.save()
-    }
 }
 
 async function start() {
     // Initialize commands
     global.commands = {}
-    for (let commands of glob.sync('./commands/**/*.js')) {
-        delete require.cache[commands]
-        global.commands[commands] = require(commands)
-    }
+    fs.readdirSync('./commands/').forEach((dir) => {
+        let commands = fs.readdirSync(`./commands/${dir}`).filter((files) =>
+        files.endsWith(".js")
+      );
+      for (let file of commands) {
+          global.commands[file] = require(`./commands/${dir}/${file}`)
+      }
+    })
+    console.log(Object.keys(global.commands))
     console.log(greenBright(`Loaded ${Object.keys(global.commands).length} commands.`))
     InitializeWA();
-    setInterval(async () => {
-        await global.DATABASE.save()
-    }, 60 * 1000)
 }
 
-process.on('exit', () => global.DATABASE.save())
 
 start()
