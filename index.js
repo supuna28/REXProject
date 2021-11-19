@@ -10,6 +10,7 @@ const chatHandler = require('./chatHandler')
 const { startspin, success, info } = require('./lib/spinner')
 const { greenBright } = require('chalk')
 const yargs = require('yargs/yargs')
+const path = require("path")
 require('./lib/i18n')
 
 // Slogan when initializing the bot
@@ -25,7 +26,6 @@ CFonts.say('REXProject by rthelolchex', {
     colors: ['cyanBright']
 })
 
-// Thanks to Nurutomo for database JSON
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
 
 async function InitializeWA() {
@@ -52,6 +52,17 @@ async function InitializeWA() {
     conn.handler = chatHandler.handler
     conn.on('chat-update', conn.handler)
     conn.connect().then(async () => {
+      // Initialize database
+      global.db = null
+      if (!fs.existsSync("./database.json")) {
+        database = {
+          users: {},
+          chats: {},
+          stats: {}
+        }
+        fs.writeFileSync("./database.json", JSON.stringify(database, null, "\t"))
+        return global.db = require("./database.json")
+      } else global.db = require("./database.json")
         fs.writeFileSync(authinfo, JSON.stringify(conn.base64EncodedAuthInfo()), null, '\t')
     })
 }
@@ -65,12 +76,50 @@ async function start() {
       );
       for (let file of commands) {
           global.commands[file] = require(`./commands/${dir}/${file}`)
+          nocache(`./commands/${dir}/${file}`, module => {
+            console.log(`>> Reloading file ${module}.`)
+            global.commands[file] = require(`./commands/${dir}/${file}`)
+          })
       }
     })
     console.log(Object.keys(global.commands))
     console.log(greenBright(`Loaded ${Object.keys(global.commands).length} commands.`))
     InitializeWA();
+    // Saving database every minute
+    setInterval(async () => {
+      await fs.writeFileSync("./database.json", JSON.stringify(global.db, null, "\t"))
+    }, 60 * 1000)
 }
 
+/**
+ * Uncache if there is file change
+ * @param {string} module Module name or path
+ * @param {function} cb <optional> 
+ */
+function nocache(module, call = () => { }) {
+    fs.watchFile(require.resolve(module), async () => {
+        await uncache(require.resolve(module))
+        call(module)
+    })
+}
+
+/**
+ * Uncache a module
+ * @param {string} module Module name or path
+ */
+function uncache(module) {
+    return new Promise((resolve, reject) => {
+        try {
+            delete require.cache[require.resolve(module)]
+            resolve()
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 
 start()
+
+process.on("exit", () => {
+  if (global.db) fs.writeFileSync("./database.json", JSON.stringify(global.db, null, "\t"))
+})

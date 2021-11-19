@@ -12,8 +12,27 @@ module.exports = {
         let m = chatUpdate.messages.all()[0]
         try {
             simpleChatUpdate.chatUpdate(this, m)
+            m.exp = 0
+            m.limit = false
+            try {
+              let user = global.db.users[m.sender]
+              if (user) {
+                if (!('name' in user)) user.name = this.getName(m.sender)
+                if (!isNumber(user.exp)) user.exp = 0
+                if (!isNumber(user.limit)) user.limit = 10
+                if (!isNumber(user.level)) user.level = 1
+              } else global.db.users[m.sender] = {
+                name: this.getName(m.sender),
+                exp: 0,
+                limit: 10,
+                level: 1
+              }
+            } catch (e) {
+              console.error(e)
+            }
             try {
                 if (m.isBaileys) return
+                m.exp += Math.ceil(Math.random() * 10)
                 let isROwner = conn.user.jid.includes(m.sender)
                 let groupMetadata = m.isGroup ? conn.chats.get(m.chat).metadata || await conn.groupMetadata(m.chat) : {} || {}
                 let participants = m.isGroup ? groupMetadata.participants : [] || []
@@ -57,6 +76,8 @@ module.exports = {
                         }
                         m.isCommand = true
                         m.command = commandName
+                        let xp = 'exp' in commands ? parseInt(commands.exp) : 17 // earning xp per commands
+                        m.exp += xp
                         let extra = {
                             usedPrefix,
                             text,
@@ -83,8 +104,14 @@ module.exports = {
             } catch (e) {
                 console.log(e)
             }
-        } catch (e) {
-            console.log(e)
+        } finally {
+          let user
+          if (m) {
+            if (m.sender && (user = global.db.users[m.sender])) {
+              user.exp += m.exp
+              user.limit -= m.limit * 1
+            }
+          }
         }
         try {
             require('./lib/messageLog')(this, m)

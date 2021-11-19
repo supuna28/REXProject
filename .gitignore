@@ -111,3 +111,6 @@ yarn.lock
 
 # Database
 database.json
+
+# package-lock for node older version
+package-lock.json
