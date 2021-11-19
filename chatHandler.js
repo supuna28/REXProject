@@ -1,4 +1,5 @@
 require('./config.js')
+const users = require('./users.json')
 const simpleChatUpdate = require('./lib/simpleChatUpdate')
 const { MessageType } = require('@adiwajshing/baileys')
 const util = require('util')
@@ -33,7 +34,9 @@ module.exports = {
             try {
                 if (m.isBaileys) return
                 m.exp += Math.ceil(Math.random() * 10)
-                let isROwner = conn.user.jid.includes(m.sender)
+                let isROwner = [global.conn.user.jid, ...users.owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+                let isOwner = isROwner || m.fromMe
+                let isPremium = isROwner || users.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
                 let groupMetadata = m.isGroup ? conn.chats.get(m.chat).metadata || await conn.groupMetadata(m.chat) : {} || {}
                 let participants = m.isGroup ? groupMetadata.participants : [] || []
                 let user = m.isGroup ? participants.find(u => u.jid == m.sender) : {} 
@@ -58,7 +61,15 @@ module.exports = {
                             conn.reply(m.chat, i18n.__("failed.notGroup"), m)
                             continue;
                         }
-                        if (commands.owner && !isROwner) {
+                        if (commands.rowner && commands.owner && !(isROwner || isOwner)) {
+                            conn.reply(m.chat, i18n.__('failed.owner'), m)
+                            continue;
+                        }
+                        if (commands.rowner && !isROwner) {
+                            conn.reply(m.chat, i18n.__('failed.owner'), m)
+                            continue;
+                        }
+                        if (commands.owner && !isOwner) {
                             conn.reply(m.chat, i18n.__("failed.owner"), m)
                             continue;
                         }
@@ -74,9 +85,18 @@ module.exports = {
                             conn.reply(m.chat, i18n.__('maintenance'), m)
                             continue
                         }
+                        if (commands.premium && !isPremium) {
+                            conn.reply(m.chat, i18n.__('failed.notPremium'))
+                            continue
+                        }
+                        if (commands.private && m.isGroup) {
+                            conn.reply(m.chat, i18n.__('failed.privateOnly'), m)
+                            continue
+                        }
                         m.isCommand = true
                         m.command = commandName
                         let xp = 'exp' in commands ? parseInt(commands.exp) : 17 // earning xp per commands
+                        
                         m.exp += xp
                         let extra = {
                             usedPrefix,

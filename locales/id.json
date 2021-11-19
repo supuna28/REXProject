@@ -4,13 +4,19 @@
 		"notGroup": "[ ❗ ] *_Perintah ini hanya bisa digunakan di grup!_*",
 		"notAdmin": "[ ❗ ] *_Perintah ini hanya bisa digunakan oleh admin grup!_*",
 		"notBotAdmin": "[ ❗ ] *_Mohon promosikan bot ini menjadi admin grup untuk menggunakan perintah ini!_*",
-		"notMentioned": "[ ❗ ] *_Tag membernya._*",
+		"notMentioned": "[ ❗ ] *_Tag seseorang._*",
 		"notQuoted": "[ ❗ ] *_Reply sebuah pesan berisi foto atau video!_*",
+		"notPremium": "*_Perintah ini hanya bisa digunakan oleh pengguna premium!_*",
 		"error": "[ ❗ ] *_Terjadi error ketika memproses permintaan anda, silahkan coba lagi._*",
 		"usernameNotIncluded": "[ ❗ ] *_Mohon masukkan username!_*",
 		"urlNotIncluded": "[ ❗ ] *_Mohon masukkan url!_*",
 		"idNotIncluded": "[ ❗ ] *_Mohon masukkan id!_*",
-		"textNotIncluded": "[ ❗ ] *_Mohon masukkan teks!_*"
+		"textNotIncluded": "[ ❗ ] *_Mohon masukkan teks!_*",
+		"alreadyPremium": "[ ❗ ] *_@{user} sudah premium!_*",
+		"privateOnly": "[ ❗ ] *_Perintah ini hanya bisa digunakan di chat pribadi!_*"
+	},
+	"event": {
+		"hasPremium": "*_@{user} sekarang premium!_*"
 	},
 	"sticker": {
 		"description": "Konversi foto atau video menjadi sticker.",
@@ -60,7 +66,16 @@
 	"gi": {
 		"stalk": {
 			"description": "Stalk pengguna genshin impact dengan uid. (Tidak bekerja jika diprivate)"
-		}
+		},
+		"getcookie": {
+			"description": "Login akun anda menggunakan cookie. (Private chat only)",
+			"cookieNotIncluded": "[ ❗ ] Isi cookie!"
+		},
+		"dailyclaim": {
+			"description": "Claim daily check-in di akun anda (Membutuhkan cookie token)",
+			"success": "Berhasil claim daily check-in, silahkan login ke game untuk melanjutkan\nAnda mendapatkan : x{value} {item}"
+		},
+		"cookieNotFound": "Silahkan buat cookie untuk login akun anda, ketik {prefix}gigetcookie (paste cookie) di private chat.\nTutorial coming soon yaa"
 	},
 	"info": {
 		"getpp": {
@@ -79,5 +94,10 @@
 		"user": "Halo, {pushname}!\nBerikut ini adalah daftar perintah yang bisa anda gunakan di bot ini!"
 	},
 	"maintenance": "Perintah ini sedang maintenance, silahkan tunggu pembaruan selanjutnya.",
+	"brainly": {
+		"description": "Temukan bantuan jawaban.",
+		"!query": "[ ❗ ] Soalnya?",
+		"403": "[ ❗ ] Server sedang down, silahkan coba lagi nanti."
+	},
 	"": ""
 }

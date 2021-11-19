@@ -3,7 +3,11 @@ module.exports = {
   tags: "random",
   async run(m, { conn, text }) {
     let ans = ["Ya", "Tidak", "Mungkin", "Mungkin iya", "Mungkin tidak", "YNTKTS", "Tidak mungkin", "Ga ngerti bang, coba lagi wkwk"]
-    return conn.reply(m.chat, `*Pertanyaan*: ${m.text.slice(global.prefix.length)}\n*Jawaban:* ${pickRandom(ans)}`, m)
+    return conn.reply(m.chat, `*Pertanyaan*: ${m.text.slice(global.prefix.length)}\n*Jawaban:* ${pickRandom(ans)}`, m, m.mentionedJid ? {
+      contextInfo: {
+        mentionedJid: m.mentionedJid
+      }
+    } : {})
   }
 }
 
