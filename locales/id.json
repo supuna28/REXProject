@@ -13,7 +13,8 @@
 		"idNotIncluded": "[ ❗ ] *_Mohon masukkan id!_*",
 		"textNotIncluded": "[ ❗ ] *_Mohon masukkan teks!_*",
 		"alreadyPremium": "[ ❗ ] *_@{user} sudah premium!_*",
-		"privateOnly": "[ ❗ ] *_Perintah ini hanya bisa digunakan di chat pribadi!_*"
+		"privateOnly": "[ ❗ ] *_Perintah ini hanya bisa digunakan di chat pribadi!_*",
+		"isNaN": "[ ❗ ] *_Masukkan angka, bukan huruf!_*"
 	},
 	"event": {
 		"hasPremium": "*_@{user} sekarang premium!_*"
@@ -108,6 +109,22 @@
 			"noMessage": "[ ❗ ]  *_Reply pesan viewonce!_*",
 			"notViewOnceMessage": "[ ❗ ]  *_Pesan tersebut bukan sekali-lihat!_*",
 			"failed": "[ ❗ ]  *_Terjadi kesalahan saat membaca pesan, mungkin sudah pernah dibuka oleh bot._*"
+		}
+	},
+	"internet": {
+		"waifupics": {
+			"neko": {
+				"description": "Kirim gambar anime neko random melalui waifu.pics server."
+			},
+			"megumin": {
+				"description": "Kirim gambar anime megumin random melalui waifu.pics server."
+			},
+			"waifu": {
+				"description": "Kirim gambar anime waifu random melalui waifu.pics server."
+			},
+			"shinobu": {
+				"description": "Kirim gambar anime shinobu random melalui waifu.pics server."
+			}
 		}
 	},
 	"": ""

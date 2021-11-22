@@ -27,6 +27,8 @@ CFonts.say('REXProject by rthelolchex', {
 })
 
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+global.owner = require('./users.json').owner
+global.premium = require('./users.json').premium
 
 async function InitializeWA() {
     global.conn = new WAConnection()
