@@ -78,12 +78,8 @@
 		"cookieNotFound": "Silahkan buat cookie untuk login akun anda, ketik {prefix}gigetcookie (paste cookie) di private chat.\nTutorial coming soon yaa"
 	},
 	"info": {
-		"getpp": {
-			"description": "Dapatkan foto profile pengguna atau group.",
-			"done": "Berhasil mendapatkan gambar."
-		},
 		"isonwa": {
-			"description": "Cek apakah nomor hp ini ada di whatsapp."
+			"description": "Check if a number on whatsapp."
 		}
 	},
 	"support": "[ 💬 ] *_Terima kasih telah menggunakan bot ini, anda dapat donasi kami di perintah '{global.prefix}donate'_*",
@@ -95,9 +91,24 @@
 	},
 	"maintenance": "Perintah ini sedang maintenance, silahkan tunggu pembaruan selanjutnya.",
 	"brainly": {
+		"403": "[ ❗ ] Server sedang down, silahkan coba lagi nanti.",
 		"description": "Temukan bantuan jawaban.",
-		"!query": "[ ❗ ] Soalnya?",
-		"403": "[ ❗ ] Server sedang down, silahkan coba lagi nanti."
+		"!query": "[ ❗ ] *_Soalnya?_*"
+	},
+	"tools": {
+		"getpp": {
+			"description": "Dapatkan foto profile pengguna atau group.",
+			"done": "Berhasil mendapatkan gambar."
+		},
+		"isonwa": {
+			"description": "Cek apakah nomor hp ini aktif di whatsapp."
+		},
+		"readviewonce": {
+			"description": "Meneruskan pesan sekali-lihat menjadi file media.",
+			"noMessage": "[ ❗ ]  *_Reply pesan viewonce!_*",
+			"notViewOnceMessage": "[ ❗ ]  *_Pesan tersebut bukan sekali-lihat!_*",
+			"failed": "[ ❗ ]  *_Terjadi kesalahan saat membaca pesan, mungkin sudah pernah dibuka oleh bot._*"
+		}
 	},
 	"": ""
 }

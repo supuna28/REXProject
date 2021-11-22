@@ -60,6 +60,12 @@
 	"gi": {
 		"stalk": {
 			"description": "Stalk genshin impact user with uid. (Not working if privated)"
+		},
+		"dailyclaim": {
+			"description": "gi.dailyclaim.description"
+		},
+		"getcookie": {
+			"description": "gi.getcookie.description"
 		}
 	},
 	"info": {
@@ -79,5 +85,10 @@
 		"user": "Hello, {pushname}!\nThe following is a list of commands that you can use in this bot!"
 	},
 	"maintenance": "This command is under maintenance, please wait for the next update.",
-	"": ""
+	"": "",
+	"tools": {
+		"readviewonce": {
+			"description": "tools.readviewonce.description"
+		}
+	}
 }
