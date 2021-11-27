@@ -12,8 +12,9 @@ module.exports = {
     admin: false, 
     botAdmin: false, 
     owner: false, 
-    async run(m, { conn, args, text }) {
+    async run(m, { conn, args, text, isPremium }) {
         // fill your code here
+        let user = global.db.users[m.sender]
         let stiker = false
         let isMedia = (m.type === 'imageMessage' || m.type === 'videoMessage' || m.quoted)
         if (!isMedia) throw i18n.__('failed.notQuoted')
@@ -27,7 +28,9 @@ module.exports = {
             return err
         })
         .on('end', async function() {
-            stiker = await addExif(fs.readFileSync('./tmp/img.webp'), global.packname, global.author)
+          if (isPremium) {
+            stiker = await addExif(fs.readFileSync("./tmp/img.webp"), user.packname || global.packname, user.author || global.author)
+          } else stiker = await addExif(fs.readFileSync('./tmp/img.webp'), global.packname, global.author)
             conn.sendMessage(m.chat, stiker, MessageType.sticker)
             fs.unlinkSync('./tmp/img.webp')
             fs.unlinkSync(media)

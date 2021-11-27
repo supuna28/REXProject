@@ -5,7 +5,6 @@ module.exports = {
     name: "gistalk",
     tags: "gi",
     description: i18n.__('gi.stalk.description'),
-    maintenance: true,
     async run(m, { conn, text, args }) {
         let owner = global.db.users[global.owner + '@s.whatsapp.net']
         let user = global.db.users[m.sender]

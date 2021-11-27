@@ -21,7 +21,12 @@
 	},
 	"sticker": {
 		"description": "Konversi foto atau video menjadi sticker.",
-		"process": "[ ⌛ ] *_Memproses sticker, tunggu._*"
+		"process": "[ ⌛ ] *_Memproses sticker, tunggu._*",
+		"setwm": {
+		  "description": "Buat sebuah watermark untuk sticker anda.",
+		  "!text": "[ ❗ ] Isi teks!\nContoh: {prefix}setwm Packname|Author",
+		  "done": "Berhasil mengatur watermark."
+		}
 	},
 	"toimg": {
 		"description": "Konversi sticker menjadi media (foto atau video).",

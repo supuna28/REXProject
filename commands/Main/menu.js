@@ -12,7 +12,8 @@ module.exports = {
     admin: false, 
     botAdmin: false, 
     owner: false, 
-    async run(m, { conn, args, text }) {
+    async run(m, { conn, args, text, usedPrefix }) {
+      let teks = `${args[0]}`.toLowerCase()
         let tags = {
             'admin': "Administrator",
             'downloader': "Downloader",
@@ -20,9 +21,75 @@ module.exports = {
             "info": "Info",
             'main': "Main",
             'owner': 'Owner',
-            'sticker': 'Sticker'
+            'sticker': 'Sticker',
+            'internet': "Internet",
+            'tools': "Tools",
+            'random': "Random",
+            'premium': "Premium"
         }
-        let catBanner = 'All'
+        let arrayMenu = ["all"]
+        let listMenu = []
+        for (let list in tags) {
+          let rows = {
+            "title": tags[list],
+            "description": "",
+            "rowId": `${usedPrefix}menu ${list}`
+          }
+          listMenu.push(rows)
+          arrayMenu.push(list)
+        }
+        if (teks == "all") tags
+        if (teks == "admin") tags = {
+          "admin": "Administrator"
+        }
+        if (teks == "downloader") tags = {
+          "downloader": "Downloader"
+        }
+        if (teks == "gi") tags = {
+          "gi": "Genshin Impact"
+        }
+        if (teks == "info") tags = {
+          "info": "Info"
+        }
+        if (teks == "main") tags = {
+          "main": "Main"
+        }
+        if (teks == "owner") tags = {
+          "owner": "Owner"
+        }
+        if (teks == "sticker") tags = {
+          "sticker": "Sticker"
+        }
+        if (teks == "internet") tags = {
+          "internet": "Internet"
+        }
+        if (teks == "random") tags = {
+          "random": "Random"
+        }
+        if (teks == "premium") tags = {
+          "premium": "Premium"
+        }
+        if (teks == "tools") tags = {
+          "tools": "Tools"
+        }
+        if (!arrayMenu.includes(teks)) teks = "none"
+        if (teks == "none")  {
+          return conn.relayWAMessage(conn.prepareMessageFromContent(m.chat, {
+            "listMessage": {
+              "title": "Please click at down below.",
+              "description": global.footerText,
+              "buttonText": "Tap here",
+              "listType": "SINGLE_SELECT",
+              "sections": [{
+                  "rows": listMenu
+                }], "contextInfo": {
+                  "stanzaId": m.key.id,
+                  "participant": m.sender,
+                  "quotedMessage": m.message
+                }
+            }
+          }, {}), { waitForAck: true })
+        }
         let pushname = conn.getName(m.sender)
         let userinfo = i18n.__mf("menu.user", { pushname: pushname })
         let header = ">>> *%category* <<<"
@@ -56,6 +123,7 @@ module.exports = {
                 ].join('\n\n') + '\n' + footer
             }),
         ].join('\n\n')
+        let picBanner = (teks == "all") ? "All" : tags[teks]
         spawn('convert', [
             './src/bg.png',
             '-gravity',
@@ -68,11 +136,11 @@ module.exports = {
             '#FFFFFF',
             '-annotate',
             '0',
-            catBanner + ".",
+            picBanner + ".",
             './src/menu_tags.png'
         ])
         .on('exit', async () => {
-            await conn.send2ButtonLoc(m.chat, await fs.readFileSync('./src/menu_tags.png'), body, global.footerText, 'Owner bot', `${global.prefix}owner`, 'Donasi', `${global.prefix}donate`)
+           await conn.send2ButtonLoc(m.chat, await fs.readFileSync('./src/menu_tags.png'), body, global.footerText, 'Owner bot', `${global.prefix}owner`, 'Donasi', `${global.prefix}donate`)
         })
     }
 }

@@ -17,13 +17,11 @@ require('./lib/i18n')
 CFonts.say('REXProject', {
     font: 'block',
     align: "center",
-    colors: ["cyanBright", "blue"]
 })
 
 CFonts.say('REXProject by rthelolchex', {
     font: 'console',
     align: "center",
-    colors: ['cyanBright']
 })
 
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
@@ -44,7 +42,7 @@ async function InitializeWA() {
         info('2', "Authenticate to continue")
     })
     conn.on('open', () => {
-        success("2", "Your bot is ready!")
+        success("2", `${conn.user.name} ready!`)
         // startspin("2", "Waiting for new messages")
     })
     conn.on('close', DisconnectReason => {
@@ -63,7 +61,7 @@ async function InitializeWA() {
           stats: {}
         }
         fs.writeFileSync("./database.json", JSON.stringify(database, null, "\t"))
-        return global.db = require("./database.json")
+        global.db = require("./database.json")
       } else global.db = require("./database.json")
         fs.writeFileSync(authinfo, JSON.stringify(conn.base64EncodedAuthInfo()), null, '\t')
     })

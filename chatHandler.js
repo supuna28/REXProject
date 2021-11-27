@@ -54,7 +54,7 @@ module.exports = {
                         let commandName = cmd.slice(global.prefix.length).trim().split(/ +/).shift().toLowerCase()
                         let args = cmd.trim().split(/ +/).slice(1)
                         let text = args.join` `
-                        let isAccept = typeof commands.name === 'string' ? commands.name === commandName : Array.isArray(commands.name) ? commands.name.some(cmd => cmd === commandName) : false
+                        let isAccept = typeof commands.name === 'string' ? commands.name === commandName : Array.isArray(commands.name) ? commands.name.some(cmd => cmd === commandName) : commands.name instanceof RegExp ? commands.name.test(commandName) : false
                         if (!isAccept) continue
                         if (commands.group && !m.isGroup) {
                             conn.reply(m.chat, i18n.__("failed.notGroup"), m)
@@ -110,6 +110,7 @@ module.exports = {
                             isROwner,
                             isAdmin,
                             isBotAdmin,
+                            isPremium,
                             chatUpdate
                         }
                         try {
