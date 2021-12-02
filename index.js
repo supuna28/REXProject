@@ -5,12 +5,12 @@ const simpleChatUpdate = require('./lib/simpleChatUpdate')
 const WAConnection = simpleChatUpdate.WAConnection(_WAConnection)
 const fs = require('fs')
 const CFonts = require('cfonts')
-const glob = require('glob')
 const chatHandler = require('./chatHandler')
 const { startspin, success, info } = require('./lib/spinner')
 const { greenBright } = require('chalk')
 const yargs = require('yargs/yargs')
 const path = require("path")
+const { default: makeWASocket, useSingleFileAuthState, DisconnectReason, delay } = require('@adiwajshing/baileys-md')
 require('./lib/i18n')
 
 // Slogan when initializing the bot
@@ -67,6 +67,43 @@ async function InitializeWA() {
     })
 }
 
+async function InitializeWAMD() {
+    var loadAuthState = useSingleFileAuthState('./session_md.data.json'), state = loadAuthState.state, saveState = loadAuthState.saveState
+    global.conn = makeWASocket({
+        printQRInTerminal: true,
+        auth: state
+    })
+    conn.ev.on('connection.update', function (update) {
+        var _a, _b;
+        var connection = update.connection, lastDisconnect = update.lastDisconnect;
+        if (connection === 'close') {
+            // reconnect if not logged out
+            if (((_b = (_a = lastDisconnect.error) === null || _a === void 0 ? void 0 : _a.output) === null || _b === void 0 ? void 0 : _b.statusCode) !== DisconnectReason.loggedOut) {
+                InitializeWAMD();
+            }
+            else {
+                console.log('connection closed');
+            }
+        }
+        console.log('connectionUpdate', update);
+    })
+    conn.ev.on('creds.update', saveState);
+    conn.ev.on('messages.upsert', async (messageUpdate) => {
+        if (messageUpdate.type === 'prepend') return // avoid baileys-md to executing command on older messages
+        if (!messageUpdate.messages[0]) return
+        if (Object.keys(messageUpdate.messages[0].message)[0] === 'protocolMessage') return // this is sync chat recent event, ignoring it for more lighter cpu usage
+        let m = messageUpdate.messages[0]
+        if (m) {
+            m.message = (Object.keys(m.message)[0] === 'ephemeralMessage') ? m.message.ephemeralMessage.message : m.message
+            m.messageType = Object.keys(m.message)[0]
+            m.messageContent = m.message[m.messageType]
+            m.text = m.messageContent.text || m.messageContent.caption || m.messageContent
+            console.log(m)
+        }
+    })
+    return conn;
+}
+
 async function start() {
     // Initialize commands
     global.commands = {}
@@ -84,10 +121,11 @@ async function start() {
     })
     console.log(Object.keys(global.commands))
     console.log(greenBright(`Loaded ${Object.keys(global.commands).length} commands.`))
-    InitializeWA();
+    if (global.opts['md']) InitializeWAMD()
+    else InitializeWA()
     // Saving database every minute
     setInterval(async () => {
-      await fs.writeFileSync("./database.json", JSON.stringify(global.db, null, "\t"))
+      if (global.db) await fs.writeFileSync("./database.json", JSON.stringify(global.db, null, "\t"))
     }, 60 * 1000)
 }
 

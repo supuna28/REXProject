@@ -105,6 +105,7 @@ dist
 
 # Session data file
 session.data.json
+session_md.data.json
 
 # Yarn lock
 yarn.lock
